@@ -8,22 +8,21 @@
 import SwiftUI
 
 struct Home: View {
-    
-    @State var status = UserDefaults.standard.value(forKey: "status") as? Bool ?? false
-    
-    var body: some View{
-        VStack{
-            if self.status{
+    @State var status = UserDefaults.standard.value(forKey: SkyVPNConstants.UserDefaultKeys.userStatus.rawValue) as? Bool ?? false
+
+    var body: some View {
+        VStack {
+            if self.status {
                 HomeScreen()
-                
+
             } else {
-                VStack{
+                VStack {
                     Login()
                 }
-                 .onAppear{
-                    NotificationCenter.default.addObserver(forName: NSNotification.Name("status"), object: nil, queue: .main) { (_) in
-                        
-                        self.status = UserDefaults.standard.value(forKey: "status") as? Bool ?? false
+                .onAppear {
+                    NotificationCenter.default.addObserver(forName: NSNotification.Name(SkyVPNConstants.UserDefaultKeys.userStatus.rawValue), object: nil, queue: .main) { _ in
+
+                        self.status = UserDefaults.standard.value(forKey: SkyVPNConstants.UserDefaultKeys.userStatus.rawValue) as? Bool ?? false
                     }
                 }
             }
@@ -37,31 +36,28 @@ struct Home_Previews: PreviewProvider {
     }
 }
 
-struct HomeScreen: View{
-    var body: some View{
-        VStack{
-            
-            Image("currency").resizable().frame(width: 300.0, height: 225.0, alignment: .center)
-            
+struct HomeScreen: View {
+    var body: some View {
+        VStack {
+            Image("loginBG").resizable().frame(width: 300.0, height: 225.0, alignment: .center)
+
             Text("Signed in successfully")
                 .font(.title)
                 .fontWeight(.bold)
-            
+
             Button(action: {
-                
-                //try! Auth.auth().signOut()
-                UserDefaults.standard.set(false, forKey: "status")
-                NotificationCenter.default.post(name: NSNotification.Name("status"), object: nil)
-                
+                // try! Auth.auth().signOut()
+                UserDefaults.standard.set(false, forKey: SkyVPNConstants.UserDefaultKeys.userStatus.rawValue)
+                NotificationCenter.default.post(name: NSNotification.Name(SkyVPNConstants.UserDefaultKeys.userStatus.rawValue), object: nil)
+
             }) {
-                
                 Text("Sign out")
-                    .foregroundColor(.white)
+                    .foregroundColor(Color(.white))
                     .fontWeight(.bold)
                     .padding(.vertical)
                     .frame(width: UIScreen.main.bounds.width - 50)
             }
-            .background(Color("Dominant"))
+            .background(Color(UIColor.appColor()))
             .cornerRadius(4)
             .padding(.top, 25)
         }

@@ -11,7 +11,9 @@ import SwiftUI
 struct SkyVPNApp: App {
     var body: some Scene {
         WindowGroup {
-            Login()
+            NavigationView {
+                Home()
+            }
         }
     }
 }

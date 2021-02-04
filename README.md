@@ -44,7 +44,7 @@ this is the network layer create to handle the API calls. Every request will goe
 1. Alamofire
 
 
-All the license are mentioned in the Utilities/License.txt file
+All the license are mentioned in the Utils/License.txt file
 
 ### Code management
 Used gitflow method in this repository.

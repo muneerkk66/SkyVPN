@@ -11,4 +11,7 @@ class AuthDataHandler: BaseDataHandler {
     public func saveToken(_ token: String) {
         KeychainWrapper.standard.set(token, forKey: SkyVPNConstants.UserDefaultKeys.sessionToken.rawValue)
     }
+    public func removeToken() {
+        KeychainWrapper.standard.removeObject(forKey: SkyVPNConstants.UserDefaultKeys.sessionToken.rawValue)
+    }
 }

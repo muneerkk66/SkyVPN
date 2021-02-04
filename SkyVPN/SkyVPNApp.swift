@@ -12,7 +12,7 @@ struct SkyVPNApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                Home()
+                RouterView()
             }
         }
     }

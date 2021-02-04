@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		8F5E9D6A234F437B059BBDA7 /* Pods_SkyVPN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 695A656409E54032CF0B05D7 /* Pods_SkyVPN.framework */; };
+		E42D637E25CC1DC000349987 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42D637D25CC1DC000349987 /* BaseView.swift */; };
+		E42D638125CC252800349987 /* RouterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42D638025CC252800349987 /* RouterView.swift */; };
 		E4351BA425CA858300235AF1 /* SkyVPNApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4351BA325CA858300235AF1 /* SkyVPNApp.swift */; };
 		E4351BA825CA858A00235AF1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4351BA725CA858A00235AF1 /* Assets.xcassets */; };
 		E4351BAB25CA858A00235AF1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4351BAA25CA858A00235AF1 /* Preview Assets.xcassets */; };
@@ -20,7 +22,7 @@
 		E4351BDC25CAE38900235AF1 /* BaseAPIHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4351BDB25CAE38900235AF1 /* BaseAPIHandler.swift */; };
 		E4351BDF25CAE49600235AF1 /* AuthVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4351BDE25CAE49600235AF1 /* AuthVM.swift */; };
 		E4351BE225CAE4D300235AF1 /* BaseVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4351BE125CAE4D300235AF1 /* BaseVM.swift */; };
-		E4351BE525CAEFDD00235AF1 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4351BE425CAEFDD00235AF1 /* User.swift */; };
+		E4351BE525CAEFDD00235AF1 /* AuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4351BE425CAEFDD00235AF1 /* AuthModel.swift */; };
 		E4351BE825CAF1F500235AF1 /* AuthDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4351BE725CAF1F500235AF1 /* AuthDataHandler.swift */; };
 		E4351BEB25CAF22A00235AF1 /* BaseDataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4351BEA25CAF22A00235AF1 /* BaseDataHandler.swift */; };
 		E4351C0325CB351000235AF1 /* AppExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4351C0225CB351000235AF1 /* AppExtension.swift */; };
@@ -28,6 +30,8 @@
 
 /* Begin PBXFileReference section */
 		695A656409E54032CF0B05D7 /* Pods_SkyVPN.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SkyVPN.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E42D637D25CC1DC000349987 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		E42D638025CC252800349987 /* RouterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterView.swift; sourceTree = "<group>"; };
 		E4351BA025CA858300235AF1 /* SkyVPN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SkyVPN.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4351BA325CA858300235AF1 /* SkyVPNApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyVPNApp.swift; sourceTree = "<group>"; };
 		E4351BA725CA858A00235AF1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -42,7 +46,7 @@
 		E4351BDB25CAE38900235AF1 /* BaseAPIHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAPIHandler.swift; sourceTree = "<group>"; };
 		E4351BDE25CAE49600235AF1 /* AuthVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthVM.swift; sourceTree = "<group>"; };
 		E4351BE125CAE4D300235AF1 /* BaseVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVM.swift; sourceTree = "<group>"; };
-		E4351BE425CAEFDD00235AF1 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		E4351BE425CAEFDD00235AF1 /* AuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModel.swift; sourceTree = "<group>"; };
 		E4351BE725CAF1F500235AF1 /* AuthDataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDataHandler.swift; sourceTree = "<group>"; };
 		E4351BEA25CAF22A00235AF1 /* BaseDataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseDataHandler.swift; sourceTree = "<group>"; };
 		E4351C0225CB351000235AF1 /* AppExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppExtension.swift; sourceTree = "<group>"; };
@@ -163,6 +167,8 @@
 				E4351BBC25CA946900235AF1 /* Home.swift */,
 				E4351BC025CA948600235AF1 /* Login.swift */,
 				E4351BC325CA94A200235AF1 /* SignUp.swift */,
+				E42D637D25CC1DC000349987 /* BaseView.swift */,
+				E42D638025CC252800349987 /* RouterView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -170,7 +176,7 @@
 		E4351BBB25CA86DE00235AF1 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				E4351BE425CAEFDD00235AF1 /* User.swift */,
+				E4351BE425CAEFDD00235AF1 /* AuthModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -313,11 +319,13 @@
 				E4351BC125CA948600235AF1 /* Login.swift in Sources */,
 				E4351BC825CADCA700235AF1 /* NetWorkServices.swift in Sources */,
 				E4351BC425CA94A200235AF1 /* SignUp.swift in Sources */,
+				E42D638125CC252800349987 /* RouterView.swift in Sources */,
 				E4351BD425CAE24600235AF1 /* AuthAPIHandler.swift in Sources */,
 				E4351C0325CB351000235AF1 /* AppExtension.swift in Sources */,
 				E4351BE225CAE4D300235AF1 /* BaseVM.swift in Sources */,
 				E4351BE825CAF1F500235AF1 /* AuthDataHandler.swift in Sources */,
-				E4351BE525CAEFDD00235AF1 /* User.swift in Sources */,
+				E42D637E25CC1DC000349987 /* BaseView.swift in Sources */,
+				E4351BE525CAEFDD00235AF1 /* AuthModel.swift in Sources */,
 				E4351BEB25CAF22A00235AF1 /* BaseDataHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

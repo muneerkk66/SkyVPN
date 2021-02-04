@@ -60,7 +60,6 @@ class AuthVM: BaseVM {
     }
 
     // MARK: - Sign Up
-
     public func signUpUser(_ email: String, _ password: String, onCompletion: @escaping VMDataCompletionBlock) {
         let requestParams = [SkyVPNConstants.URLKeys.email.rawValue: email as AnyObject,
                              SkyVPNConstants.URLKeys.username.rawValue: email as AnyObject,
@@ -83,5 +82,28 @@ class AuthVM: BaseVM {
                 onCompletion(nil, error as NSError)
             }
         }
+    }
+    
+    // MARK: - Logout
+    public func logoutUser(onCompletion: @escaping VMDataCompletionBlock) {
+        
+        apiHandler.logoutUser() { (responseObject, errorObject) -> Void in
+
+            guard let response = responseObject as? Data else {
+                DispatchQueue.main.async {
+                    onCompletion(nil, errorObject)
+                }
+                return
+            }
+            onCompletion(response, nil)
+        }
+    }
+    
+    public func removeUserDetails() {
+        UserDefaults.standard.set(false, forKey: SkyVPNConstants.UserDefaultKeys.userStatus.rawValue)
+        NotificationCenter.default.post(name: NSNotification.Name(SkyVPNConstants.UserDefaultKeys.userStatus.rawValue), object: nil)
+        
+        //MARK:- Remove Saved token from Keychain
+        dataHandler.removeToken()
     }
 }

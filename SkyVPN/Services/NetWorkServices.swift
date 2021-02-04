@@ -34,9 +34,8 @@ class NetworkService: NSObject {
         return true
     }
 
-    /**
-     - Method to return the request header
-     */
+    //MARK:- Method to return the request header
+    
 
     fileprivate func requestHeader() -> [String: String] {
         var headers = [String: String]()

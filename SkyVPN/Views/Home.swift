@@ -7,48 +7,45 @@
 
 import SwiftUI
 
-struct Home: View {
-    @State var status = UserDefaults.standard.value(forKey: SkyVPNConstants.UserDefaultKeys.userStatus.rawValue) as? Bool ?? false
-
-    var body: some View {
-        VStack {
-            if self.status {
-                HomeScreen()
-
-            } else {
-                VStack {
-                    Login()
-                }
-                .onAppear {
-                    NotificationCenter.default.addObserver(forName: NSNotification.Name(SkyVPNConstants.UserDefaultKeys.userStatus.rawValue), object: nil, queue: .main) { _ in
-
-                        self.status = UserDefaults.standard.value(forKey: SkyVPNConstants.UserDefaultKeys.userStatus.rawValue) as? Bool ?? false
-                    }
-                }
-            }
-        }
-    }
-}
-
 struct Home_Previews: PreviewProvider {
     static var previews: some View {
         Home()
     }
 }
 
-struct HomeScreen: View {
-    var body: some View {
+struct Home: View {
+    public var authVM = AuthVM()
+    
+    @State fileprivate var showLoader = false
+    @State fileprivate var alert = false
+    @State fileprivate var alertTitle = ""
+    @State fileprivate var alertMessage = ""
+    
+    public var body: some View {
         VStack {
-            Image("loginBG").resizable().frame(width: 300.0, height: 225.0, alignment: .center)
+            Image("background").resizable().frame(width: 300.0, height: 225.0, alignment: .center)
 
             Text("Signed in successfully")
                 .font(.title)
                 .fontWeight(.bold)
 
             Button(action: {
-                // try! Auth.auth().signOut()
-                UserDefaults.standard.set(false, forKey: SkyVPNConstants.UserDefaultKeys.userStatus.rawValue)
-                NotificationCenter.default.post(name: NSNotification.Name(SkyVPNConstants.UserDefaultKeys.userStatus.rawValue), object: nil)
+                showLoader = true
+                authVM.logoutUser(onCompletion: { (_, errorObj) -> Void in
+                    showLoader = false
+                    if let _ = errorObj {
+                        self.alertTitle = SkyVPNConstants.Message.generalError.rawValue
+                        self.alert.toggle()
+                        return
+                    }
+                    self.alertMessage = SkyVPNConstants.Message.logout.rawValue
+                    self.alertTitle = SkyVPNConstants.Message.success.rawValue
+                    self.alert.toggle()
+                })
+                
+                //MARK:- Remove all the data related to user
+                authVM.removeUserDetails()
+                
 
             }) {
                 Text("Sign out")
@@ -60,6 +57,12 @@ struct HomeScreen: View {
             .background(Color(UIColor.appColor()))
             .cornerRadius(4)
             .padding(.top, 25)
+            .alert(isPresented: $alert) { () -> Alert in
+                Alert(title: Text("\(self.alertTitle)"), message: Text("\(self.alertMessage)"), dismissButton:
+                    .default(Text("OK").fontWeight(.semibold)))
+            }
         }
     }
 }
+
+

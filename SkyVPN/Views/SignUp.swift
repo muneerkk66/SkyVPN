@@ -8,36 +8,44 @@
 import SwiftUI
 
 struct SignUp: View {
-    @State var email = ""
-    @State var password = ""
-    @State var repassword = ""
+    
+    public var authVM = AuthVM()
+    
+    @State fileprivate var email = ""
+    @State fileprivate var password = ""
+    @State fileprivate var repassword = ""
+    @State fileprivate var color = Color.black.opacity(0.7)
+    @State fileprivate var visible = false
+    @State fileprivate var revisible = false
+    @State fileprivate var isLoading = false
+    @State fileprivate var alert = false
+    @State fileprivate var alertMessage = ""
+    @State fileprivate var showLoader = false
 
-    @State var color = Color.black.opacity(0.7)
-
-    @State var visible = false
-    @State var revisible = false
-
-    @State var alert = false
-    @State var error = ""
-
-    let borderColor = Color(red: 107.0 / 255.0, green: 164.0 / 255.0, blue: 252.0 / 255.0)
-    var authVM = AuthVM()
-    var body: some View {
+    
+    public var body: some View {
+        
+        //MARK:BaseView is for to support common features
+        BaseView {
         VStack {
-            Image("loginBG").resizable().frame(width: 300.0, height: 255.0, alignment: .center)
+            Image("background").resizable().frame(width: 300.0, height: 255.0, alignment: .center)
 
+            
             Text("Sign up a new account")
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundColor(self.color)
                 .padding(.top, 15)
 
-            TextField("Username or Email", text: self.$email)
+            
+            //MARK:- Email Field
+            TextField("Email", text: self.$email)
                 .autocapitalization(.none)
                 .padding()
-                .background(RoundedRectangle(cornerRadius: 6).stroke(self.borderColor, lineWidth: 2))
+                .background(RoundedRectangle(cornerRadius: 6).stroke(Color(UIColor.appColor()), lineWidth: 2))
                 .padding(.top, 0)
 
+            //MARK:- Password Field
             HStack(spacing: 15) {
                 VStack {
                     if self.visible {
@@ -48,21 +56,20 @@ struct SignUp: View {
                             .autocapitalization(.none)
                     }
                 }
-
+                
                 Button(action: {
                     self.visible.toggle()
                         }) {
-                    // Text(/*@START_MENU_TOKEN@*/"Button"/*@END_MENU_TOKEN@*/)
                     Image(systemName: self.visible ? "eye.slash.fill" : "eye.fill")
                         .opacity(0.8)
                 }
             }
             .padding()
             .background(RoundedRectangle(cornerRadius: 6)
-                .stroke(self.borderColor, lineWidth: 2))
+                .stroke(Color(UIColor.appColor()), lineWidth: 2))
             .padding(.top, 10)
 
-            // Confirm password
+            //MARK:- Confirm Password Field
             HStack(spacing: 15) {
                 VStack {
                     if self.revisible {
@@ -74,20 +81,23 @@ struct SignUp: View {
                     }
                 }
 
+                //MARK:Secure Icon
                 Button(action: {
                     self.revisible.toggle()
                         }) {
-                    // Text(/*@START_MENU_TOKEN@*/"Button"/*@END_MENU_TOKEN@*/)
                     Image(systemName: self.visible ? "eye.slash.fill" : "eye.fill")
                         .opacity(0.8)
                 }
             }
             .padding()
             .background(RoundedRectangle(cornerRadius: 6)
-                .stroke(self.borderColor, lineWidth: 2))
+                .stroke(Color(UIColor.appColor()), lineWidth: 2))
             .padding(.top, 10)
 
-            // Sign up button
+            //MARK:- Loader
+            ProgressView().show(showLoader)
+            
+            //MARK:Sign Up Button
             Button(action: {
                 self.Register()
                     }) {
@@ -97,39 +107,50 @@ struct SignUp: View {
                     .padding(.vertical)
                     .frame(width: UIScreen.main.bounds.width - 50)
             }
-            .background(borderColor)
+            .background(Color(UIColor.appColor()))
             .cornerRadius(6)
             .padding(.top, 15)
             .alert(isPresented: self.$alert) { () -> Alert in
-                Alert(title: Text("Sign up error"), message: Text("\(self.error)"), dismissButton:
+                Alert(title: Text("Sign up error"), message: Text("\(self.alertMessage)"), dismissButton:
                     .default(Text("OK").fontWeight(.semibold)))
             }
+            
+
         }
         .padding(.horizontal, 25)
+        }.onTapGesture {
+            self.endEditing()
+        }
     }
+    
 
-    func Register() {
+    public func Register() {
         if email != "" {
             if password == repassword {
+                showLoader = true
                 authVM.signUpUser(email, password, onCompletion: { (_, errorObj) -> Void in
+                    showLoader = false
                     if let _ = errorObj {
-                        self.error = errorObj!.localizedDescription
+                        self.alertMessage = errorObj!.localizedDescription
                         self.alert.toggle()
                         return
                     } else {
                         UserDefaults.standard.set(true, forKey: SkyVPNConstants.UserDefaultKeys.userStatus.rawValue)
                         NotificationCenter.default.post(name: NSNotification.Name(SkyVPNConstants.UserDefaultKeys.userStatus.rawValue), object: nil)
                     }
-
                 })
             } else {
-                error = "Password mismatch"
+                alertMessage = SkyVPNConstants.Message.passwordMissMatch.rawValue
                 alert.toggle()
             }
         } else {
-            error = "Please fill all the contents properly"
+            alertMessage = SkyVPNConstants.Message.emptyInputError.rawValue
             alert.toggle()
         }
+    }
+    
+    fileprivate func endEditing() {
+        UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.endEditing(true)
     }
 }
 

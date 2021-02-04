@@ -15,6 +15,11 @@ class SkyVPNConstants: NSObject {
         case production = "https://getskybox.app"
         // case test             = "http://getskybox.app
     }
+    // MARK: - Pointed Server
+    static let baseURL = BaseURL.production.rawValue
+
+    
+    
 
     enum APIUrls: String {
         case signUp = "/api/v1/user/"
@@ -29,12 +34,21 @@ class SkyVPNConstants: NSObject {
         case email
     }
 
-    // MARK: - Pointed Server
-
-    static let baseURL = BaseURL.production.rawValue
-
+    
     enum UserDefaultKeys: String {
         case sessionToken = "token"
         case userStatus
+    }
+    
+    enum Message:String {
+        case emptyInputError = "Please Enter all the content property"
+        case emptyEmail = "Email Id is empty"
+        case loginFailed = "Failed to login"
+        case passwordReset  = "Password Reset Sucessfully!"
+        case emailHasBeenSent = "A new password is sent to your email!"
+        case passwordMissMatch = "Password mismatch"
+        case generalError = "Something went wrong. Please try again after some time"
+        case logout = "Succesfully logout"
+        case success = "Success"
     }
 }

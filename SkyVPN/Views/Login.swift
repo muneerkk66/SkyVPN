@@ -6,110 +6,128 @@
 //
 
 import SwiftUI
-
 struct Login: View {
-    @State var email = ""
-    @State var password = ""
-    @State var color = Color.black.opacity(0.7)
-    @State var visible = false
-    @State var alert = false
-    @State var error = ""
-    @State var title = ""
+    public var authVM = AuthVM()
+    
+    @State fileprivate var email = ""
+    @State fileprivate var password = ""
+    @State fileprivate var color = Color.black.opacity(0.7)
+    @State fileprivate var visible = false
+    @State fileprivate var alert = false
+    @State fileprivate var alertTitle = ""
+    @State fileprivate var alertMessage = ""
+    @State fileprivate var showLoader = false
 
-    var authVM = AuthVM()
+    
+    public var body: some View {
+        
+        //MARK:BaseView is for to support common features
+        BaseView {
+            VStack {
+                
+                Image("background").resizable().frame(width: 300.0, height: 255.0, alignment: .top)
+                
+                Text("Sign in to your account")
+                    .font(.title)
+                    .fontWeight(.regular)
+                    .padding(.top, 15)
 
-    var body: some View {
-        VStack {
-            Image("loginBG").resizable().frame(width: 300.0, height: 255.0, alignment: .top)
+                //MARK:- EMail Field
+                TextField("Email", text: self.$email)
+                    .autocapitalization(.none)
+                    .padding()
+                    .background(RoundedRectangle(cornerRadius: 6).stroke(Color(UIColor.appColor()), lineWidth: 2))
+                    .padding(.top, 0)
 
-            Text("Sign in to your account")
-                .font(.title)
-                .fontWeight(.regular)
-                .padding(.top, 15)
+                //MARK:- Password Field
+                HStack(spacing: 15) {
+                    VStack {
+                        if self.visible {
+                            TextField("Password", text: self.$password)
+                                .autocapitalization(.none)
+                        } else {
+                            SecureField("Password", text: self.$password)
+                                .autocapitalization(.none)
+                        }
+                    }
 
-            TextField("Username or Email", text: self.$email)
-                .autocapitalization(.none)
-                .padding()
-                .background(RoundedRectangle(cornerRadius: 6).stroke(Color(UIColor.appColor()), lineWidth: 2))
-                .padding(.top, 0)
-
-            HStack(spacing: 15) {
-                VStack {
-                    if self.visible {
-                        TextField("Password", text: self.$password)
-                            .autocapitalization(.none)
-                    } else {
-                        SecureField("Password", text: self.$password)
-                            .autocapitalization(.none)
+                    Button(action: {
+                        self.visible.toggle()
+                    }) {
+                        Image(systemName: self.visible ? "eye.slash.fill" : "eye.fill")
+                            .foregroundColor(self.color)
+                            .opacity(0.8)
                     }
                 }
+                .padding()
+                .background(RoundedRectangle(cornerRadius: 6)
+                    .stroke(Color(UIColor.appColor()), lineWidth: 2))
+                .padding(.top, 10)
 
-                Button(action: {
-                    self.visible.toggle()
-                }) {
-                    // Text(/*@START_MENU_TOKEN@*/"Button"/*@END_MENU_TOKEN@*/)
-                    Image(systemName: self.visible ? "eye.slash.fill" : "eye.fill")
-                        .foregroundColor(self.color)
-                        .opacity(0.8)
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        self.ResetPassword()
+                        self.visible.toggle()
+                    }) {
+                        Text("Forget Password")
+                            .fontWeight(.medium)
+                            .foregroundColor(Color(UIColor.appColor()))
+                    }.padding(.top, 10.0)
                 }
-            }
-            .padding()
-            .background(RoundedRectangle(cornerRadius: 6)
-                .stroke(Color(UIColor.appColor()), lineWidth: 2))
-            .padding(.top, 10)
-
-            HStack {
-                Spacer()
+      
+                //MARK:- Loader
+                ProgressView().show(showLoader)
+                
+                //MARK:- Sign in button
                 Button(action: {
-                    self.ResetPassword()
-                    self.visible.toggle()
+                    self.Verify()
                 }) {
-                    Text("Forget Password")
-                        .fontWeight(.medium)
-                        .foregroundColor(Color(UIColor.appColor()))
-                }.padding(.top, 10.0)
-            }
-
-            // Sign in button
-            Button(action: {
-                self.Verify()
-            }) {
-                Text("Sign in")
-                    .foregroundColor(.white)
-                    .fontWeight(.bold)
-                    .padding(.vertical)
-                    .frame(width: UIScreen.main.bounds.width - 50)
-            }
-            .background(Color(UIColor.appColor()))
-            .cornerRadius(6)
-            .padding(.top, 15)
-            .alert(isPresented: $alert) { () -> Alert in
-                Alert(title: Text("\(self.title)"), message: Text("\(self.error)"), dismissButton:
-                    .default(Text("OK").fontWeight(.semibold)))
-            }
-
-            HStack(spacing: 5) {
-                Text("Don't have an account ?")
-
-                NavigationLink(destination: SignUp()) {
-                    Text("Sign up")
+                    
+                    Text("Sign in")
+                        .foregroundColor(.white)
                         .fontWeight(.bold)
-                        .foregroundColor(Color(UIColor.appColor()))
+                        .padding(.vertical)
+                        .frame(width: UIScreen.main.bounds.width - 50)
+                  
+                   
+                }
+                .background(Color(UIColor.appColor()))
+                .cornerRadius(6)
+                .padding(.top, 15)
+                .alert(isPresented: $alert) { () -> Alert in
+                    Alert(title: Text("\(self.alertTitle)"), message: Text("\(self.alertMessage)"), dismissButton:
+                        .default(Text("OK").fontWeight(.semibold)))
                 }
 
-                Text("now").multilineTextAlignment(.leading)
+                HStack(spacing: 5) {
+                    Text("Don't have an account ?")
 
-            }.padding(.top, 25)
+                    NavigationLink(destination: SignUp()) {
+                        Text("Sign up")
+                            .fontWeight(.bold)
+                            .foregroundColor(Color(UIColor.appColor()))
+                    }
+
+                    Text("now").multilineTextAlignment(.leading)
+
+                }.padding(.top, 25)
+            }
+            .padding(.horizontal, 25)
+        }.onTapGesture {
+            self.endEditing()
         }
-        .padding(.horizontal, 25)
+
     }
 
-    func Verify() {
+    public func Verify() {
         if email != "", password != "" {
+            showLoader = true
             authVM.loginUser(email, password, onCompletion: { (_, errorObj) -> Void in
+                showLoader = false
                 if let _ = errorObj {
-                    self.error = errorObj!.localizedDescription
-                    self.title = "Login Error"
+                    self.alertMessage = errorObj!.localizedDescription
+                    self.alertTitle = SkyVPNConstants.Message.loginFailed.rawValue
                     self.alert.toggle()
                     return
                 }
@@ -119,29 +137,34 @@ struct Login: View {
             })
 
         } else {
-            title = "Login Error"
-            error = "Please fill all the content property"
+            alertTitle = SkyVPNConstants.Message.loginFailed.rawValue
+            alertMessage = SkyVPNConstants.Message.emptyInputError.rawValue
             alert = true
         }
     }
 
-    func ResetPassword() {
+    public func ResetPassword() {
         if email != "" {
+            showLoader = true
             authVM.forgotUserPassword(email, onCompletion: { (_, errorObj) -> Void in
-
+                showLoader = false
                 if let _ = errorObj {
-                    self.error = "Error"
+                    self.alertMessage = SkyVPNConstants.Message.generalError.rawValue
                     self.alert.toggle()
                     return
                 }
-                self.title = "Password Reset Sucessfully!"
-                self.error = "A new password is sent to your email!"
+                self.alertTitle = SkyVPNConstants.Message.passwordReset.rawValue
+                self.alertMessage = SkyVPNConstants.Message.emailHasBeenSent.rawValue
                 self.alert.toggle()
             })
         } else {
-            error = "Email Id is empty"
+            alertMessage = SkyVPNConstants.Message.emptyEmail.rawValue
             alert.toggle()
         }
+    }
+    
+    private func endEditing() {
+        UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.endEditing(true)
     }
 }
 

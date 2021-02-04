@@ -10,6 +10,7 @@
 		8F5E9D6A234F437B059BBDA7 /* Pods_SkyVPN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 695A656409E54032CF0B05D7 /* Pods_SkyVPN.framework */; };
 		E42D637E25CC1DC000349987 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42D637D25CC1DC000349987 /* BaseView.swift */; };
 		E42D638125CC252800349987 /* RouterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42D638025CC252800349987 /* RouterView.swift */; };
+		E42D638525CC2B8800349987 /* SkyVPNLicense.txt in Resources */ = {isa = PBXBuildFile; fileRef = E42D638425CC2B8800349987 /* SkyVPNLicense.txt */; };
 		E4351BA425CA858300235AF1 /* SkyVPNApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4351BA325CA858300235AF1 /* SkyVPNApp.swift */; };
 		E4351BA825CA858A00235AF1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4351BA725CA858A00235AF1 /* Assets.xcassets */; };
 		E4351BAB25CA858A00235AF1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4351BAA25CA858A00235AF1 /* Preview Assets.xcassets */; };
@@ -32,6 +33,7 @@
 		695A656409E54032CF0B05D7 /* Pods_SkyVPN.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SkyVPN.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E42D637D25CC1DC000349987 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		E42D638025CC252800349987 /* RouterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterView.swift; sourceTree = "<group>"; };
+		E42D638425CC2B8800349987 /* SkyVPNLicense.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = SkyVPNLicense.txt; sourceTree = "<group>"; };
 		E4351BA025CA858300235AF1 /* SkyVPN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SkyVPN.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4351BA325CA858300235AF1 /* SkyVPNApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyVPNApp.swift; sourceTree = "<group>"; };
 		E4351BA725CA858A00235AF1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 			children = (
 				E4351BCF25CADF9000235AF1 /* SkyVPNConstants.swift */,
 				E4351C0225CB351000235AF1 /* AppExtension.swift */,
+				E42D638425CC2B8800349987 /* SkyVPNLicense.txt */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4351BAB25CA858A00235AF1 /* Preview Assets.xcassets in Resources */,
+				E42D638525CC2B8800349987 /* SkyVPNLicense.txt in Resources */,
 				E4351BA825CA858A00235AF1 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
